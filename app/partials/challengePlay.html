@@ -1,0 +1,68 @@
+<div id='challengePlay'>
+  <h5 style='color:#666666'>challenge name: <span class='challengePlayName'>{{challenge.challengeName}}</span></h5>
+  <tabs>
+    <pane heading='Challenge' active='true'>
+      <div class="alert" ng-show='challenge.completed == true'>
+        Challenge complete!
+      </div>      
+      <div ng-show='challenge.completed == false'>
+        <div class='well well-small'>
+          <small><strong>question:</strong> <span class='label label-info'>{{challenge.questionIndex}}/{{challenge.questionCount}}</span>
+          <strong>score:</strong> <span class='label label-info'>{{scoreBoard.points}} ({{scoreBoard.answersCorrectCount}}/{{scoreBoard.answersAttemptCount}}) -- {{scoreBoard.answersCorrectPercentage}}%</span> <strong class='label label-info' ng-show='challenge.hasAnswered'>last answer:</strong> <span class='{{scoreBoard.lastResultClass}}'>{{scoreBoard.lastResultAnswer}}</span></small>
+        </div>      
+        <p>
+          <span style='white-space: normal;' class='answerDefinition'><i>{{challenge.answerDefinition}}</i></span>
+        </p> 
+        <p>
+          <button class='btn btn-primary' ng-click='challenge.answer(0);' style='margin-right:4px;margin-bottom:4px'>{{challenge.answer0}}</button>
+          <button class='btn btn-primary' ng-click='challenge.answer(1);' style='margin-right:4px;margin-bottom:4px'>{{challenge.answer1}}</button>
+          <button class='btn btn-primary' ng-click='challenge.answer(2);' style='margin-right:4px;margin-bottom:4px'>{{challenge.answer2}}</button>
+          <button class='btn btn-primary' ng-click='challenge.answer(3);' style='margin-right:4px;margin-bottom:4px'>{{challenge.answer3}}</button>
+        </p>
+      </div>
+    </pane>
+    <pane heading='Scores'>
+      <table id='scoreBoard' class='table table-bordered table-condensed' style='background: white;'>
+        <thead>
+          <tr class='info'>
+            <th><span class='badge badge-info'>#</span></th>
+            <th ng-repeat='(name, player) in scoreBoard.players'>
+              <img ng-src='{{challenge.getUserAvatarUrl(name)}}' ng-show='{{challenge.hasUserAvatarUrl(name)}}' height='20' width='20' />
+              <span class='label'>{{name}} <small>{{player.points}} ({{player.answersCorrectCount}}/{{player.answersAttemptCount}})</small></span>
+            </th>
+            <th>{{scoreBoard.summary.points}} ({{scoreBoard.summary.answersCorrect}}/{{scoreBoard.summary.answersAttempted}})</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat='question in scoreBoard.questions'>
+          <tr class='info'>
+            <td colspan='4' align='left'>
+              <small>{{question.definition}}</small>              
+              <span ng-switch on='scoreBoard.spying'>
+                <span ng-switch-when='true'>&nbsp;&nbsp;<small class='label label-success'>{{question.answer}}</small></span>
+              </span>
+            </td>
+          </tr>          
+          <tr>
+            <td rowspan='2'><span class='badge badge-info'>{{$index + 1}}</td>
+            <td ng-repeat='player in scoreBoard.players'>
+              <span ng-show='challenge.isAnswered(player, $parent.$index) == true' class='{{challenge.getAnswerClass(player, $parent.$index)}}' ng-animate="{show: 'fade'}">{{player.answers[$parent.$index].answer}}</span>
+            </td>
+            <td>{{question.points}} ({{question.answersCorrect}}/{{question.answersAttempted}})</td>
+          </tr>
+        </tbody>
+      </table>
+    </pane>
+  </tabs>
+  <!--
+    <div class='navbar navbar-fixed-bottom footStatus'>
+      Status:
+      <span class="tallyStatus">{{challenge.tallyStatus}}</span>
+      <span class="answerStatus normColor">{{challenge.answerStatus}}</span>
+      <span class="challengerStatus">
+        <span class="challengerStatusWrapper">
+          <span class="challengerStatusContent">{{challenge.challengerStatus}}</span>
+        </span>
+      </span>
+    </div>  
+  -->
+</div>

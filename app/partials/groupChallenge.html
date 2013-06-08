@@ -1,0 +1,107 @@
+<div id='groupChallenge' ctrl='TopLevelController'>
+  <tabs>
+    <pane heading='Active' active='true'>
+      <p>Create a new Group challenge so you can beat everyone!</p>
+      <div class='input-append'>
+        <input name='challengeCreateName' id='challengeCreateName' ng-model='challengeName.name' />
+        for: 
+        <select ng-model="selectedDictionary.name" ng-options="item as item for item in dictionaryList"></select>
+        <button class='btn btn-primary' ng-click='createChallenge()'>Create challenge</button>
+      </div>
+      <p>Or, continue your unfinished challenges:</p>
+      <div class="alert" ng-show='challengesActive.items.length < 1'>
+        You have not started any challenges. Go join one!
+      </div>
+      <div ng-show='challengesActive.items.length > 0'>  
+        <ul class='pager'>
+          <li><button class='btn btn-info' ng-click='challengesActiveNewer()'>&larr; Newer</button></li>
+          <li><button class='btn btn-info' ng-click='challengesActiveOlder()' ng-disabled='challengesActivePage >= challengesActive.pageCount'>Older &rarr;</button></li>
+        </ul>
+        <table class='table table-striped'>
+          <tbody>
+            <tr ng-repeat='challenge in challengesActive.items'>
+              <td>
+                <div class='row-fluid' ng-animate="{show: 'fade'}">
+                  <div class='span10'>
+                    <h4>{{challenge.name}}</h4>
+                    <div><small>created: <strong>{{challenge.created | date:'shortDate'}} {{challenge.created | date:'shortTime'}}</strong> by: <strong>{{challenge.userName}}</strong></small></div>
+                  </div>
+                  <div class='span2'>
+                      <button class='btn btn-primary' ng-click='resume(challenge.name)'>Resume</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </pane>
+    <pane heading='Open'>
+      <p>Join in and beat your friends!</p>
+      <div class="alert" ng-show='challengesOpen.items.length < 1'>
+        There are no open challenges. Go create one!
+      </div>
+      <div ng-show='challengesOpen.items.length > 0'>
+        <ul class='pager'>
+          <li><button class='btn btn-info' ng-click='challengesOpenNewer()'>&larr; Newer</button></li>
+          <li><button class='btn btn-info' ng-click='challengesOpenOlder()' ng-disabled='challengesOpenPage >= challengesOpen.pageCount'>Older &rarr;</a></li>
+        </ul>
+        <table class='table table-striped'>
+          <tbody>
+            <tr ng-repeat='challenge in challengesOpen.items'>
+              <td>
+                <div class='row-fluid'>
+                  <div class='span10'>
+                    <h4>{{challenge.name}}</h4>
+                    <div><small>created: <strong>{{challenge.created | date:'shortDate'}} {{challenge.created | date:'shortTime'}}</strong> by: <strong>{{challenge.userName}}</strong></small></div>
+                  </div>
+                  <div class='span2'>
+                    <div class='btn-group' class='span4'>
+                      <button class='btn btn-primary' ng-click='join(challenge.name)'>Play</button>
+                      <button class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>
+                        <span class='caret'></span>
+                      </button>
+                      <ul class='dropdown-menu'>
+                        <li><a href='#' ng-click='watch(challenge.name)'>Watch</a></li>
+                        <li><a href='#' ng-click='spy(challenge.name)'>Spy!</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </pane>
+    <pane heading='Completed'>
+      <p>The past tends to repeat itself.</p>
+      <div class="alert" ng-show='challengesCompleted.items.length < 1'>
+        You have not completed any challenges yet. Get moving!
+      </div>
+      <div ng-show='challengesCompleted.items.length > 0'>
+        <ul class='pager'>
+          <li><button class='btn btn-info' ng-click='challengesCompletedNewer()'>&larr; Newer</button></li>
+          <li><button class='btn btn-info' ng-click='challengesCompletedOlder()' ng-disabled='challengesCompletedPage >= challengesCompleted.pageCount'>Older &rarr;</button></li>
+        </ul>
+        <table class='table table-striped'>
+          <tbody>
+            <tr ng-repeat='challenge in challengesCompleted.items'>
+              <td>
+                <div class='row-fluid'>
+                  <div class='span10'>
+                    <h4>{{challenge.details.name}}</h4>
+                    <div><small>completed: <strong>{{challenge.created | date:'shortDate'}} {{challenge.created | date:'shortTime'}}</strong></small></div>
+                  </div>
+                  <div class='span2'>
+                    <button class='btn btn-primary' ng-click='view(challenge.details.name)'>View</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </pane>
+  </tabs>
+</div>

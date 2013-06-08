@@ -1,0 +1,8 @@
+<div id='challengeCompletedDetails'>
+	{{challenge}}
+    <b>Points: {{challenge.ownAnswers.answersCorrectCount * 100}} | </b><b>Percentage: {{challenge.ownAnswers.answersCorrectPercentage}}</b>
+    <div ng-repeat='answer in challenge.ownAnswers.answers'>
+        <div class='answerDefinition' style='white-space:normal'>{{answer.word.word}}: {{answer.word.definition}}</div>
+        My answer: <div>{{answer.answer}}</div>: {{answer.correct}}
+    </div>
+</div>

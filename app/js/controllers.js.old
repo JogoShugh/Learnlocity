@@ -1,0 +1,130 @@
+'use strict';
+
+var userName = '';
+
+angular.module('qwizly.controllers', []).
+  controller('SplashCtrl', ['$location', '$rootScope', function($location, $rootScope) {
+  }])
+  .controller('HomeCtrl', ['$dialog', '$scope', function($dialog, $scope) {
+    console.log('Home called');
+    $scope.login = function(item) {
+      var d = $dialog.dialog({modalFade: true, 
+        resolve: {item: function(){ return angular.copy(item); } }});
+      d.open('partials/login.html', 'LoginCtrl');
+    };
+  }])
+  .controller('LoginCtrl', ['$rootScope', '$scope', 'socket', 'dialog', 'item',
+    function($rootScope, $scope, socket, dialog, item) {
+    $scope.item = item;
+    $scope.submit = function() {
+      var cmd = {
+        userNameOrEmail: $scope.email,
+        password: $scope.password
+      };
+      socket.send("Login", cmd);
+      dialog.close('ok');
+    };
+  }])
+  .controller('MainMenuCtrl', ['$scope', function($scope) {
+  }])
+  .controller('GroupChallengeCtrl', ['$scope', 'socket', function($scope, socket) {
+    var challenges = [];
+    $scope.challenges = challenges;
+    $scope.createChallenge = function() {
+      var cmd = {
+        userName: userName,
+        name: $scope.challengeName,
+        isOpen: true,
+        isGroup: true
+      };
+      console.log('ChallengeCreate: ' + cmd);      
+      socket.send('ChallengeCreate', cmd);
+    };
+    $scope.join = function(challengeName) {
+      var cmd = {
+        name: challengeName,
+        userName: userName
+      };
+      console.log(cmd);
+      socket.send('ChallengeJoin', cmd);
+    };
+    $scope.$on('ChallengeCreated', function(event, message) {      
+      challenges.push(message);
+    });
+  }])
+  .controller('ChallengePlayCtrl', ['$scope', '$rootScope', '$location', 'socket',
+    function($scope, $rootScope, $location, socket) {
+      $rootScope.currentChallengeQuestionIndex = 0;
+      $scope.$on('ChallengeQuestionSent', function(event, challengeQuestion) {
+        if (challengeQuestion) {
+          var definition = challengeQuestion.definition
+          var choices = challengeQuestion.choices
+          $scope.challengePlayName = challengeQuestion.name;
+          $scope.answerDefinition = definition;
+          $scope.answer0 = choices[0];
+          $scope.answer1 = choices[1];
+          $scope.answer2 = choices[2];
+          $scope.answer3 = choices[3];
+          $scope.answer = function(index) {
+            var selection = choices[index];
+            var answer = {
+              name: challengeQuestion.name,
+              index: challengeQuestion.index,
+              answer: selection,
+              userName: userName
+            };
+            console.log(answer);
+            socket.send('ChallengeSubmitAnswer', answer);            
+            $rootScope.challengeSendNextQuestion();
+          };
+          $scope.tallyStatus = "0 / 0";
+          $scope.answerStatus = "ans";
+          $scope.challengerStatus = "chl";
+        }
+      });
+      $scope.$on('ChallengeCompleted', function(event, message) {
+        console.log('Got ChallengedCompleted');
+        $location.path('/challengeCompleted')
+      });
+      var ownAnswers = {
+        answersCorrectCount: 0,
+        answersCorrectPercentage: 100,
+        answers: []
+      };
+      $rootScope.ownAnswers = ownAnswers;
+      $rootScope.userAnswers = {};
+      $rootScope.getUserAnswerIfExists = function(index) {
+        console.log ('Called get user answers for index: ' + index);
+        var html = '';
+        for (var key in $rootScope.userAnswers) {
+          var userAnswers = $rootScope.userAnswers[key];
+          if (userAnswers.answers.length >= index) {
+            for (var i = 0; i < userAnswers.answers.length; i++) {
+              var userAnswer = userAnswers.answers[i];
+              if (i == index) {
+                var className = (userAnswer.answer == userAnswer.word.word ? 'answerCorrect normColor' : 'answerIncorrect normColor');
+                html += userAnswer.userName + ": <span class='" + className + "'>" +
+                  userAnswer.answer + '</span>\n';
+              }
+            }
+          }
+        }
+        console.log('Html:');
+        console.log(html);
+        return html;
+      };
+      $rootScope.getClassName = function(answer) {
+        return answer.correct ? 'answerCorrect normColor' : 'answerIncorrect normColor';
+      };
+      $rootScope.$on('ChallengeCompletedDetails', function(event, message) {
+        console.log('Got completed details:');
+        console.log(message);
+        $rootScope.ownAnswers = message.ownAnswers;
+        $rootScope.userAnswers = message.userAnswers;
+      });
+      $rootScope.challengeSendNextQuestion();
+    }])
+    .controller('ChallengeCompletedCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+
+    }])
+  ;

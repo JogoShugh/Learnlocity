@@ -1,0 +1,1 @@
+coffee -c AgileDictionary.coffee DDDDictionary.coffee Dictionary.coffee GreDictionary.coffee LearnlocityServer.Test.coffee LearnlocityServer2.coffee commands.coffee db.coffee dictionarySchema.coffee importer.coffee learnlocity.web.coffee learnlocityServer.coffee mongoRepository.coffee myunderscore.coffee paginator.coffee utils.coffee

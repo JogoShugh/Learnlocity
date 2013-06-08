@@ -1,0 +1,35 @@
+<div id='dictionarySelecct'>
+  <h3>Dictionaries</h3>
+  <p>Create a brand new dictionary for yourself or friends:</p>
+  <div class='input-append'>
+    <input ng-model='dictionaryName.name' />
+    <button class='btn btn-primary' ng-click='dictionaryCreate()'>Create dictionary</button>
+  </div>
+  <p>Or, select an existing dictionary:</p>
+  <div class="alert" ng-show='dictionaryList.items.length < 1'>
+    No dictionaries exist. Create one!
+  </div>
+  <div ng-show='dictionaryList.items.length > 0'>  
+    <ul class='pager'>
+      <li><button class='btn btn-info' ng-click='newer()'>&larr; Newer</button></li>
+      <li><button class='btn btn-info' ng-click='older()' ng-disabled='page >= dictionaryList.pageCount'>Older &rarr;</button></li>
+    </ul>
+    <table class='table table-striped'>
+      <tbody>
+        <tr ng-repeat='item in dictionaryList.items'>
+          <td>
+            <div class='row-fluid' ng-animate="{show: 'fade'}">
+              <div class='span10'>
+                <h4>{{item.title}}</h4>
+                <div><small>word count: <strong>{{item.wordCount}}</strong></div>
+              </div>
+              <div class='span2'>
+                  <button class='btn btn-primary' ng-click='select(item.title)'>Select</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

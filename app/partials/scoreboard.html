@@ -1,0 +1,20 @@
+<div id='scoreboard'>
+  <div class='well well-small' ng-repeat='challenge in scoreboard.items'>      
+      <h4>{{challenge[0].details.name}}</h4>
+      <div>
+        <div>
+          <span class="label label-info">Latest:</span> <b>{{challenge[0].latest.userName}}:</b> {{challenge[0].latest.details.answersCorrectCount * 100}} ({{challenge[0].latest.details.answersCorrectCount}}/{{challenge[0].latest.details.answersAttemptCount}}) -- {{challenge[0].latest.details.answersCorrectPercentage}}%
+        </div>
+        <div>
+          <span class="label label-success">Leader:</span> <b>{{challenge[0].userName}}:</b> {{challenge[0].details.answersCorrectCount * 100}} ({{challenge[0].details.answersCorrectCount}}/{{challenge[0].details.answersAttemptCount}}) -- {{challenge[0].details.answersCorrectPercentage}}%
+        </div>
+      </div>
+      <button class='btn btn-primary btn-mini' ng-click='setDetailsVisible(challenge)'>Show all</button>
+      <div ng-show='challenge.detailsVisible'>
+        <div ng-repeat='score in challenge' style='border-bottom: 1px solid gray; margin-bottom: 2px;'>
+          <b>{{score.userName}}:</b> {{score.details.answersCorrectCount * 100}} ({{score.details.answersCorrectCount}}/{{score.details.answersAttemptCount}}) -- {{score.details.answersCorrectPercentage}}%      
+        </div>
+        <button class='btn btn-info btn-mini' ng-disabled='true'>Show answers</button>
+      </div>
+  </div>
+</div>

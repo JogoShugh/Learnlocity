@@ -1,0 +1,214 @@
+/* app css stylesheet */
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+.splash
+{    
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-align: center;
+}
+
+.splashCenter
+{    
+    margin-top: 10px;
+    opacity: .85;
+}
+
+.logo {
+  margin-top: 10px;
+}
+
+.footStatus
+{
+    font-size: 80%;
+    display: none; /* TODO: this is a total hack for now */
+    background: #FADB4E;
+    background-image: -webkit-linear-gradient( #FFEFAA,#FFE155 );
+    background-image: -moz-linear-gradient( #FFEFAA,#FFE155 );
+    background-image: -ms-linear-gradient( #FFEFAA,#FFE155 );
+    background-image: -o-linear-gradient( #FFEFAA,#FFE155 );
+    background-image: linear-gradient( #FFEFAA,#FFE155 );
+    color: black;
+    text-shadow: white 0px -1px 1px;
+    padding: 4px;
+}
+
+.footStatus span {
+    padding: 2px;
+}
+
+#challengePlay .footStatus {
+    display: block;
+}        
+
+.altColor {
+    color: black;
+    text-shadow: white 0px -1px 1px;
+}
+
+.normColor {
+    color: white;
+    text-shadow: black 0px -1px 1px;
+}
+
+.challengeCompletedDetailsTable {
+    background: #444444;
+    border: 1px solid #222222;
+    width:100%;
+}
+
+.challengeCompletedDetailsTable td {
+    padding: 2px;
+}
+
+.challengeCompletedDetailsTable .header {
+    background: #777777;
+}        
+
+.answerCheck {
+    display: none;
+}
+
+.answerWord {
+    padding: 2px;
+    /*display: none;*/
+}
+
+.answerCorrect {
+    background-color: darkgreen;
+}
+
+.challengeCompletedDetails .answerCorrect {
+    padding: 2px;
+}
+
+.answerIncorrect {
+    background-color: darkred;
+}
+
+.answerIncorrect .answerWord {
+    display: inline;
+}        
+
+.answerIncorrect .answerCheck {
+    display: none;
+}
+
+.answerDefinition {
+    font-weight: bold;
+}
+
+.answerChoices {
+    font-size: 75%;
+}
+
+.challengeCompletedDetails .answerIncorrect {
+    padding: 2px;
+}        
+
+.challengerStatus {
+    display: none;
+}        
+
+.challengerStatusWrapper {
+    background: #666666;
+}
+
+.challengerStatusContent {
+    background: #666666;
+    color: white;
+    text-shadow: black 0px -1px 1px;
+}
+
+.fade-setup {
+  -webkit-transition: 2s linear opacity;
+  -moz-transition: 2s linear opacity;
+  -o-transition: 2s linear opacity;
+  transition: 2s linear opacity;
+
+  opacity: 0;
+}
+
+.fade-setup.fade-start {
+  opacity: 1;
+}
+
+/* Bootstrap styling */
+
+nav-tabs > li > a {
+  background: #f0f0f0;
+}
+
+#scoreBoard td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#scoreBoard th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.totalsColumn {
+  background: #f5f5f5;
+  border 1px solid #f0f0f0;
+}
+
+#contentView {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
+
+.btn { line-height: 17px } 
+
+select { line-height: 17px; height: 27px;}
+
+.styled [class*="span"] {
+  background-color: #eee;
+  text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  min-height: 40px;
+  line-height: 40px;
+}
