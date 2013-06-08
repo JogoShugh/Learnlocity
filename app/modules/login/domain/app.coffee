@@ -1,6 +1,5 @@
-requiredir = require 'require-dir'
-modules = requiredir './modules', 
-  filter: '.*module\.*js'
-  recurse: true
+modules = require './modules'
+fw = require './framework'
 
-console.log modules
+fw.send 'Login', 'the login message'
+

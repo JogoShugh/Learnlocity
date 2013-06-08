@@ -2,19 +2,17 @@
 (function() {
   var fw;
 
-  fw = require('../framework');
+  fw = require('../../framework');
 
   'class LoginModule\n  constructor: (registerHandler, registerSubscriber) ->\n    console.log \'handler:\'\n    console.log registerHandler\n    console.log \'subscriber:\'\n    console.log registerSubscriber';
 
 
-  fw.addModule('login');
+  fw.registerHandler('Login', function(loginCommand) {
+    return console.log('here is the command:' + loginCommand);
+  });
 
-  console.log('handler:');
-
-  console.log(fw.registerHandler);
-
-  console.log('subscriber:');
-
-  console.log(fw.registerSubscriber);
+  fw.registerSubscriber('LoginCompleted', function(loginCompleted) {
+    return console.log('it completed:' + loginCompleted);
+  });
 
 }).call(this);

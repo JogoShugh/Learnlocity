@@ -2,7 +2,7 @@
 (function() {
   var fw;
 
-  fw = require('../framework');
+  fw = require('../../framework');
 
   'class LoginModule\n  constructor: (registerHandler, registerSubscriber) ->\n    console.log \'handler:\'\n    console.log registerHandler\n    console.log \'subscriber:\'\n    console.log registerSubscriber';
 

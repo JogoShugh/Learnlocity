@@ -1,4 +1,4 @@
-fw = require '../framework'
+fw = require '../../framework'
 
 '''
 class LoginModule

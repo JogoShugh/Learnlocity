@@ -2,19 +2,30 @@
 (function() {
   module.exports = {
     modules: [],
+    messageHandlers: {},
+    eventSubscribers: [],
     addModule: function(moduleName) {
       this.modules.push(moduleName);
       return console.log('module added:' + moduleName);
     },
     registerSubscriber: function(topic, subscriber) {
-      console.log('reg subscriber:');
-      console.log(topic);
-      return console.log(subscriber);
+      return this.eventSubscribers.push({
+        topic: topic,
+        callback: subscriber
+      });
     },
     registerHandler: function(message, handler) {
-      console.log('reg handler');
-      console.log(message);
-      return console.log(handler);
+      return this.messageHandlers[message] = handler;
+    },
+    send: function(messageName, message) {
+      var handler;
+
+      handler = this.messageHandlers[messageName];
+      if (handler != null) {
+        return handler(message);
+      } else {
+        return console.log('No handler found for message name: ' + messageName);
+      }
     }
   };
 
