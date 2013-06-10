@@ -1,4 +1,4 @@
-fw = require '../../framework'
+bus = require '../../bus'
 
 '''
 class LoginModule
@@ -8,9 +8,3 @@ class LoginModule
     console.log 'subscriber:'
     console.log registerSubscriber
 '''
-fw.addModule 'user'
-
-console.log 'handler:'
-console.log fw.registerHandler
-console.log 'subscriber:'
-console.log fw.registerSubscriber

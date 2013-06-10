@@ -2,6 +2,13 @@
   "name": "app",
   "version": "0.0.1",
   "dependencies": {
-    "require-dir": "*"
+    "require-dir": "*",
+    "express": "*",
+    "socket.io": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "underscore": "*",
+    "passport": "*",
+    "passport-facebook": "*"
   }
 }
